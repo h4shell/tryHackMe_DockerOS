@@ -25,6 +25,7 @@ RUN apt-get update && \
     wordlists \
     tcpdump \
     netcat-openbsd
+RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -O /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared
 RUN echo "alias 'myip=curl api.ipify.org'" >> /root/.bashrc
 RUN echo "set -g mouse on" >> /root/.tmux.conf
 COPY tunnel /usr/bin/
