@@ -29,6 +29,7 @@ RUN wget https://github.com/cloudflare/cloudflared/releases/latest/download/clou
 RUN echo "alias 'myip=curl api.ipify.org'" >> /root/.bashrc
 RUN echo "set -g mouse on" >> /root/.tmux.conf
 COPY tunnel /usr/bin/
+RUN chmod +x /usr/bin/tunnel
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 RUN echo 'root:password' | chpasswd
