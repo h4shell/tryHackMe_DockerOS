@@ -22,7 +22,9 @@ RUN apt-get update && \
     nikto \
     hydra \
     ffuf \
-    wordlists 
+    wordlists \
+    tcpdump \
+    netcat-openbsd
 RUN echo "alias 'myip=curl api.ipify.org'" >> /root/.bashrc
 RUN echo "set -g mouse on" >> /root/.tmux.conf
 COPY tunnel /usr/bin/
