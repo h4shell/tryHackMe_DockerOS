@@ -1,0 +1,33 @@
+#!/bin/bash
+# Verifica che sia stato fornito almeno un parametro
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <port>"
+    exit 1
+fi
+# Prendi la porta dal primo parametro
+port=$1
+
+if [ $port == 'ssh' ]; then
+    ssh -R $(( RANDOM % 21000 + 21100 )):localhost:22 serveo.net
+    exit 1
+fi
+
+echo "Select your tunnel:"
+echo
+select opt in "Cloudflare" "Localhost.run" "Serveo.net"; do
+    case $opt in
+        "Cloudflare")
+            cloudflared --url localhost:${port}
+            break
+            ;;
+        "Localhost.run")
+            ssh -R 80:localhost:${port} nokey@localhost.run
+            break
+            ;;
+        "Serveo.net")
+            ssh -R 80:localhost:${port} serveo.net
+            break
+            ;;
+        *) echo "Opzione non valida";;
+    esac
+done

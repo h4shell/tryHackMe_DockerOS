@@ -1,0 +1,22 @@
+services:
+  tryhackme-dockeros:
+    build: infra/docker/kali
+    container_name: tryhackme-dockeros
+    privileged: true
+    cap_add:
+      - NET_ADMIN  # Aggiungi questa riga
+    devices:
+      - /dev/net/tun  # Aggiungi questa riga
+    volumes:
+      - "./openvpn_config:/openvpn_config"
+    ports:
+      - "4022:22"
+  wetty-tryhackme-dockeros:
+    image: wettyoss/wetty
+    container_name: wetty-tryhackme-dockeros
+    ports:
+      - "20200:20200"
+    entrypoint: node /usr/src/app/build/main.js -p 20200 --ssh-host tryhackme-dockeros --ssh-user root
+    environment:
+      - SSH_HOST=tryhackme-dockeros
+      - SSH_PORT=22
